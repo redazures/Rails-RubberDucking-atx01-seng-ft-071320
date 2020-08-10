@@ -1,12 +1,11 @@
 class DucksController < ApplicationController
-
+  before_action :find_employee, only:[:show,:edit,:update,:destroy]
 
   def index
     @ducks = Duck.all
   end
 
   def show
-    @duck=Duck.find(params[:id])
   end
 
   def new
@@ -14,9 +13,9 @@ class DucksController < ApplicationController
   end
 
   def create
-    @duck=Duck.new(duck_params)
+    @duck=Duck.create(duck_params)
+    byebug
     if @duck.valid?
-      @duck.save
       redirect_to duck_path(@duck)
     else
       flash[:my_errors]=@duck.errors.full_messages
@@ -25,11 +24,9 @@ class DucksController < ApplicationController
   end
 
   def edit
-    @duck=Duck.find(params[:id])
   end
 
   def update
-    @duck=Duck.find(params[:id])
     if @duck.update(duck_params)
       redirect_to duck_path(@duck)
     else
@@ -41,6 +38,11 @@ class DucksController < ApplicationController
   private
 
   def duck_params
-    params.require(:duck).permit(:name, :mod)
+    params.require(:duck).permit(:name, :mod, :student_id)
   end
+
+  def find_duck
+    @duck=Duck.find(params[:id])
+  end
+
 end
