@@ -1,0 +1,7 @@
+<h1><%=@student.name%>'s page</h1>
+<h2>Student is in Mod <%=@student.mod%></h2>
+    <%@student.ducks.each do|d|%>
+    <ul>
+    <li><%=d.name%></li>
+    </ul>
+<%end%>
